@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<script src="/js/account.js">
+</script>
+<body>
+	<div>
+		<form method="post" id="login-form">
+			<label>Login</label><br>
+			<label for="username">User-name</label><br>
+			<input type="text" id="username"><br>
+			<label for="password">Password</label><br>
+			<input type="text" id="password"><br><br>
+			<button id="loginBtn" onclick="logIn()">Submit</button>
+		</form>
+	</div><br>
+	
+	<div>
+			<form method="post" id="register-form" accept-charset="utf-8">
+			<label>Register</label><br>
+			<label for="firstName">First Name</label><br>
+			<input type="text" id="firstName"><br>
+			<label for="lastName">Last Name</label><br>
+			<input type="text" id="lastName"><br>
+			<label for="username">User-name</label><br>
+			<input type="text" id="register-username"><br>
+			<label for="password">Password</label><br>
+			<input type="text" id="register-password"><br><br>
+			<button id="loginBtn" onclick="register()">Register</button>
+		</form>
+	</div><br>
+	
+	<div>
+		<button id="printAll" onclick="printAll()">Print All</button>
+	</div>
+</body>
+
