@@ -24,7 +24,7 @@ public class Main {
 		}).start(7077);
 		
 		app.routes(()->{
-			//localhost:7077/login
+			//http://localhost:7077/login
 			path("/users", ()->{
 				path("/register",()->{
 					post(UsersController::register);
@@ -35,29 +35,29 @@ public class Main {
 			});
 			path("/requests", ()->{
 				path("/employee", ()->{
-					path("getRequests", ()->{
+					path("/getRequests", ()->{
 						post(RequestController::getRequestsByEmployeeID);
 					});
-					path("submitRequest", ()->{
+					path("/submitRequest", ()->{
 						post(RequestController::submitRequest);
 					});
-					path("editRequest", ()->{
+					path("/editRequest", ()->{
 						post(RequestController::editRequestByRequestID);
 					});
 				});
 				path("/manager", ()->{
-					path("getRequests", ()->{
+					path("/getRequests", ()->{
 						post(RequestController::getRequestsByManagerID);
 					});
-					path("editRequest", ()->{
+					path("/editRequest", ()->{
 						post(RequestController::editRequestByManagerID);
 					});
 				});
 				path("/deptHead", ()->{
-					path("getRequests", ()->{
+					path("/getRequests", ()->{
 						post(RequestController::getRequestsByDeptID);
 					});
-					path("editRequest", ()->{
+					path("/editRequest", ()->{
 						post(RequestController::editRequestByDeptID);
 					});
 				});

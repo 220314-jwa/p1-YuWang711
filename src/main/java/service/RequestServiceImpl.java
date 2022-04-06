@@ -31,7 +31,7 @@ public class RequestServiceImpl implements RequestService{
 		if(requestID == -1) {		
 			throw new RequestSubmittedUnsuccessfully();
 		}
-		return 0;
+		return requestID;
 	}
 	@Override
 	public Set<Request> getRequestsByEmployeeID(int employeeID) {
