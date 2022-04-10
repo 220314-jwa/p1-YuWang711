@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import database.RequestDAO;
@@ -21,7 +24,13 @@ import main.Status;
 
 public class RequestPostgre implements RequestDAO{
 	private static DatabaseUtil dbUtil = DatabaseUtil.getConnectionUtil();
-
+	private DateTimeFormatter df = new DateTimeFormatterBuilder()
+		    // case insensitive to parse JAN and FEB
+		    .parseCaseInsensitive()
+		    // add pattern
+		    .appendPattern("yyyy-MM-dd")
+		    // create formatter (use English Locale to parse month names)
+		    .toFormatter(Locale.ENGLISH);
 	@Override
 	public int create(Request dataToCreate) {
 		int generatedID = 0;
@@ -89,13 +98,13 @@ public class RequestPostgre implements RequestDAO{
 				
 			if(resultSet.next()) {
 				request = new Request();
-				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"));
+				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"),df);
 				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),resultSet.getString("EventTypeName"));
 				Status statusID = new Status(resultSet.getInt("Status_id"),resultSet.getString("StatusName"));
 				request.setRequestID(requestID);
 				request.setEventTypeId(eventTypeID);
 				request.setStatusId(statusID);
-				request.setEventDate(date);
+				request.setEventDate(date.toString());
 				request.setCost(resultSet.getDouble("Costs"));
 				request.setDescription(resultSet.getString("Description"));
 				request.setLocation(resultSet.getString("Locations"));
@@ -123,7 +132,7 @@ public class RequestPostgre implements RequestDAO{
 			ResultSet resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
-				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"));
+				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"),df);
 				Request request = new Request();
 				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),resultSet.getString("EventTypeName"));
 				Status statusID = new Status(resultSet.getInt("Status_id"),resultSet.getString("StatusName"));
@@ -131,7 +140,7 @@ public class RequestPostgre implements RequestDAO{
 				request.setEventTypeId(eventTypeID);
 				request.setStatusId(statusID);
 				request.setRequestID(resultSet.getInt("ID"));
-				request.setEventDate(date);
+				request.setEventDate(date.toString());
 				request.setCost(resultSet.getDouble("Costs"));
 				request.setDescription(resultSet.getString("Description"));
 				request.setLocation(resultSet.getString("Locations"));
@@ -241,7 +250,7 @@ public class RequestPostgre implements RequestDAO{
 			ResultSet resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
-				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"));
+				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"),df);
 				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),"");
 				Status statusID = new Status(resultSet.getInt("Status_id"),"");
 				Request request = new Request();
@@ -249,7 +258,7 @@ public class RequestPostgre implements RequestDAO{
 				request.setRequestID(resultSet.getInt("ID"));
 				request.setEventTypeId(eventTypeID);
 				request.setStatusId(statusID);
-				request.setEventDate(date);
+				request.setEventDate(date.toString());
 				request.setCost(resultSet.getDouble("Costs"));
 				request.setDescription(resultSet.getString("Description"));
 				request.setLocation(resultSet.getString("Locations"));
@@ -267,16 +276,17 @@ public class RequestPostgre implements RequestDAO{
 	public Set<Request> getAllRequestsByDeptID(int DeptID) {
 		Set<Request> requests = new HashSet<Request>();
 		//fix the sql query
-
+		//Should i use subquery?
 		String sql_query = "SELECT REQUESTS.ID,Event_type_id,Status_id,Event_date,Costs,Description,Locations,Submitted_at FROM REQUESTS "
-				+ "	inner join Employee on REQUESTS.submitter_id = Employee.id and Employee.DeptHeadID  = ?;";
+				+ "	inner join Employee on REQUESTS.submitter_id = Employee.id and Employee.Department_ID  = ? "
+				+ "	inner join department on Employee.id = department.deptheadid and Employee.department_id  = department.id;";
 		try( Connection conn = dbUtil.getConnection();
 			PreparedStatement pStatement = conn.prepareStatement(sql_query);){
 			pStatement.setInt(1, DeptID);
 			ResultSet resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
-				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"));
+				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"),df);
 				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),"");
 				Status statusID = new Status(resultSet.getInt("Status_id"),"");
 				Request request = new Request();
@@ -284,7 +294,7 @@ public class RequestPostgre implements RequestDAO{
 				request.setRequestID(resultSet.getInt("ID"));
 				request.setEventTypeId(eventTypeID);
 				request.setStatusId(statusID);
-				request.setEventDate(date);
+				request.setEventDate(date.toString());
 				request.setCost(resultSet.getDouble("Costs"));
 				request.setDescription(resultSet.getString("Description"));
 				request.setLocation(resultSet.getString("Locations"));
@@ -309,7 +319,7 @@ public class RequestPostgre implements RequestDAO{
 			ResultSet resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
-				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"));
+				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"),df);
 				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),"");
 				Status statusID = new Status(resultSet.getInt("Status_id"),"");
 				Request request = new Request();
@@ -318,7 +328,7 @@ public class RequestPostgre implements RequestDAO{
 				request.setRequestID(resultSet.getInt("ID"));
 				request.setEventTypeId(eventTypeID);
 				request.setStatusId(statusID);
-				request.setEventDate(date);
+				request.setEventDate(date.toString());
 				request.setCost(resultSet.getDouble("Costs"));
 				request.setDescription(resultSet.getString("Description"));
 				request.setLocation(resultSet.getString("Locations"));

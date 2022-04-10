@@ -68,12 +68,7 @@ public class UsersController {
 			ctx.status(401);
 			ctx.result(e.getMessage());
 		}
-//		try {
-//			
-//			
-//		} catch () {
-//			
-//		}
+
 	}
 	
 

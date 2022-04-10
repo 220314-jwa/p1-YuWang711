@@ -6,7 +6,7 @@ public class Request {
 	private int submitter_id;
 	private EventType event_type_id;
 	private Status status;
-	private LocalDate event_date;
+	private String event_date;
 	private double cost;
 	private String description;
 	private String location;
@@ -25,7 +25,7 @@ public class Request {
 		return status;
 	}
 	
-	public LocalDate getEventDate() {
+	public String getEventDate() {
 		return event_date;
 	}
 	
@@ -55,7 +55,7 @@ public class Request {
 		this.status = statusId;
 	}
 	
-	public void setEventDate(LocalDate event_date) {
+	public void setEventDate(String event_date) {
 		this.event_date = event_date;
 	}
 	

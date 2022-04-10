@@ -20,7 +20,7 @@ public class RequestController {
 		request.setSubmitterId(Integer.parseInt(credentials.get("submitterID")));
 		request.setEventTypeId(new EventType(Integer.parseInt(credentials.get("eventTypeID")),""));
 		request.setStatusId(new Status(Integer.parseInt(credentials.get("statusID")),""));
-		request.setEventDate(LocalDate.parse(credentials.get("eventDate")));
+		request.setEventDate(LocalDate.parse(credentials.get("eventDate")).toString());
 		request.setCost(Double.parseDouble(credentials.get("costs")));
 		request.setDescription(credentials.get("description"));
 		request.setLocation(credentials.get("location"));
@@ -41,8 +41,10 @@ public class RequestController {
 		Map<String,String> credentials = ctx.bodyAsClass(Map.class);
 		
 		int employeeID = Integer.parseInt(credentials.get("employeeID"));
+		
 		Set<Request> requests = requestServiceImpl.getRequestsByEmployeeID(employeeID);
-
+		System.out.println("getrequests");
+		ctx.json(requests);
 		ctx.status(200);	
 	}
 	
@@ -51,10 +53,10 @@ public class RequestController {
 		Request request = new Request();
 
 		request.setRequestID(Integer.parseInt(credentials.get("requestID")));
-		request.setSubmitterId(Integer.parseInt(credentials.get("submitterID")));
+		request.setSubmitterId(Integer.parseInt(credentials.get("submit	terID")));
 		request.setEventTypeId(new EventType(Integer.parseInt(credentials.get("eventTypeID")),""));
 		request.setStatusId(new Status(Integer.parseInt(credentials.get("statusID")),""));
-		request.setEventDate(LocalDate.parse(credentials.get("eventDate")));
+		request.setEventDate(LocalDate.parse(credentials.get("eventDate")).toString());
 		request.setCost(Double.parseDouble(credentials.get("costs")));
 		request.setDescription(credentials.get("description"));
 		request.setLocation(credentials.get("location"));
@@ -87,7 +89,7 @@ public class RequestController {
 		request.setSubmitterId(Integer.parseInt(credentials.get("submitterID")));
 		request.setEventTypeId(new EventType(Integer.parseInt(credentials.get("eventTypeID")),""));
 		request.setStatusId(new Status(Integer.parseInt(credentials.get("statusID")),""));
-		request.setEventDate(LocalDate.parse(credentials.get("eventDate")));
+		request.setEventDate(LocalDate.parse(credentials.get("eventDate")).toString());
 		request.setCost(Double.parseDouble(credentials.get("costs")));
 		request.setDescription(credentials.get("description"));
 		request.setLocation(credentials.get("location"));
@@ -113,7 +115,7 @@ public class RequestController {
 		request.setSubmitterId(Integer.parseInt(credentials.get("submitterID")));
 		request.setEventTypeId(new EventType(Integer.parseInt(credentials.get("eventTypeID")),""));
 		request.setStatusId(new Status(Integer.parseInt(credentials.get("statusID")),""));
-		request.setEventDate(LocalDate.parse(credentials.get("eventDate")));
+		request.setEventDate(LocalDate.parse(credentials.get("eventDate")).toString());
 		request.setCost(Double.parseDouble(credentials.get("costs")));
 		request.setDescription(credentials.get("description"));
 		request.setLocation(credentials.get("location"));

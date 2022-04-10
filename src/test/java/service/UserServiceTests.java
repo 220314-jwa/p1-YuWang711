@@ -63,14 +63,14 @@ public class UserServiceTests {
 		//Make sure table to created.
 		//Create mock data for login
 		mockerUser_1 = new Employee();
+		mockerUser_1.setFirstName("first name");
+		mockerUser_1.setLastName("last name");
 		mockerUser_1.setUsername("mockUser_1");
 		mockerUser_1.setPassword("mockUser_password");
+		mockerUser_1.setDeptID(1);
+		mockerUser_1.setManagerID(1);
 		int mockUserID = employeeServ.register(mockerUser_1);
 		mockerUser_1.setEmployeeID(mockUserID);
-	
-		//Mock user session
-		//Mock user request
-	
 	}	
 	@AfterAll
 	public static void fin() {

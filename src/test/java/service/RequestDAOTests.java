@@ -41,7 +41,7 @@ public class RequestDAOTests {
 	private static int submitter_id = 1;
 	private static EventType event_type_id = new EventType(1,"test_eventType");
 	private static Status status = new Status(1,"test_status");
-	private static LocalDate event_date = LocalDate.now();
+	private static String event_date = LocalDate.now().toString();
 	private static double cost = 1.0;
 	private static String description = "test_description";
 	private static String location = "test_location";
