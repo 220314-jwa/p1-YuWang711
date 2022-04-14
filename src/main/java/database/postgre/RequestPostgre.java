@@ -277,9 +277,9 @@ public class RequestPostgre implements RequestDAO{
 		//Should i use subquery?
 		String sql_query = "SELECT RQ.ID,Submitter_id,RQ.Event_type_id,ET.EventTypeName,RQ.Status_id,S.StatusName,RQ.Event_date "
 				+",RQ.Costs,RQ.Description,RQ.Locations,RQ.Submitted_at FROM (requests as RQ inner join employee "
-				+"		on RQ.submitter_id = employee.id "
-				+"		inner join department d on employee.department_id = d.id and d.deptheadid = ?),eventtype ET, status as S "
-				+"	 WHERE RQ.Status_id = S.ID AND RQ.Event_type_id = ET.ID AND RQ.Status_id = 2;";
+				+"on RQ.submitter_id = employee.id "
+				+"inner join department d on employee.department_id = d.id and d.deptheadid = ?),eventtype ET, status as S "
+				+"WHERE RQ.Status_id = S.ID AND RQ.Event_type_id = ET.ID AND RQ.Status_id = 2;";
 		try( Connection conn = dbUtil.getConnection();
 			PreparedStatement pStatement = conn.prepareStatement(sql_query);){
 			pStatement.setInt(1, DeptID);
@@ -314,8 +314,8 @@ public class RequestPostgre implements RequestDAO{
 		//fix the sql query
 		String sql_query = "SELECT RQ.ID,Submitter_id,RQ.Event_type_id,ET.EventTypeName,RQ.Status_id,S.StatusName,RQ.Event_date "
 				+	",RQ.Costs,RQ.Description,RQ.Locations,RQ.Submitted_at FROM (requests as RQ inner join employee "
-				+	"	on RQ.submitter_id = employee.id and employee.manager_id = ?),eventtype ET, status as S "
-					+" WHERE RQ.Status_id = S.ID AND RQ.Event_type_id = ET.ID AND RQ.Status_id = 1;";
+				+	"on RQ.submitter_id = employee.id and employee.manager_id = ?),eventtype ET, status as S "
+					+"WHERE RQ.Status_id = S.ID AND RQ.Event_type_id = ET.ID AND RQ.Status_id = 1;";
 		try( Connection conn = dbUtil.getConnection();
 			PreparedStatement pStatement = conn.prepareStatement(sql_query);){
 			pStatement.setInt(1, ManagerID);

@@ -11,22 +11,9 @@ import database.EmployeeDAO;
 import database.util.DatabaseUtil;
 import main.Employee;
 
-/*	Statement Vs PreparedStatement
- *  1. PreparedStatement binds various object types
- *  where as Statement uses String concatenation
- *  2. PreparedStatement prevents SQL injection.
- */ 
-
-/*
- * Employee contains
- * ID, First Name, Last Name, Manager_ID, Department_ID, Password
- * 
- */
 
 public class EmployeePostgre implements EmployeeDAO{
 	private static DatabaseUtil dbUtil = DatabaseUtil.getConnectionUtil();
-	//CREATE TABLE IF NOT EXISTS EMPLOYEE  (ID SERIAL PRIMARY KEY    NOT NULL, First_Name    	TEXT, Last_Name      	TEXT, Manager_ID     	INT, Department_ID	 	INT, Username 			TEXT	NOT NULL,Salt 	   			TEXT	NOT NULL, Password 			TEXT	NOT NULL);
-
 	@Override
 	public int create(Employee dataToCreate) {
 		int generatedID = 0;
@@ -174,27 +161,6 @@ public class EmployeePostgre implements EmployeeDAO{
 			}
 		return 0;
 	}
-/*		//
-	CREATE TABLE IF NOT EXISTS EMPLOYEE  (ID SERIAL PRIMARY KEY    NOT NULL, First_Name    	TEXT, Last_Name      	TEXT, Manager_ID     	INT, Department_ID	 	INT, Username 			TEXT	NOT NULL UNIQUE,Salt 	   			TEXT	NOT NULL, Password 			TEXT	NOT NULL);
-	public void createTable() {
-		String sql_query = 
-				"CREATE TABLE IF NOT EXISTS EMPLOYEE " + 
-				" (ID SERIAL PRIMARY KEY    NOT NULL," +
-				" First_Name    	TEXT," +
-				" Last_Name      	TEXT," +
-				" Manager_ID     	INT," +
-				" Department_ID	 	INT," +
-				" Username 			TEXT	NOT NULL UNIQUE," +
-				" Salt 	   			TEXT	NOT NULL," +
-				" Password 			TEXT	NOT NULL);";
-		try (Connection conn = dbUtil.getConnection();
-			PreparedStatement pStatement = conn.prepareStatement(sql_query)){
-			System.out.println(pStatement.toString());
-			pStatement.executeUpdate();
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}*/
 
 	@Override
 	public String[] getSaltAndHashByUserName(String user) {
