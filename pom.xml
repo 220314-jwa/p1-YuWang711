@@ -5,7 +5,10 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>Project_1_TRMS</name>
   <description>Tuition Reimbursement Management System</description>
-  
+  <properties>
+  <sonar.organization>220314-jwa</sonar.organization>
+  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+</properties>
   
   <dependencies>
 	<dependency>

@@ -8,6 +8,10 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 import database.postgre.*;
 
 public class Main {
+	
+	final static String getRequests = "/getRequests";
+	final static String editRequest = "/editRequest";
+	
 	public static void main(String[] args) {
 		//Main handles request https requests
 	    //Possibly need a set up function for sql
@@ -20,6 +24,8 @@ public class Main {
 				config.enableCorsForAllOrigins();
 				config.addStaticFiles("./html", Location.CLASSPATH);
 		}).start(8080);
+		
+		
 		
 		
 		
@@ -43,29 +49,29 @@ public class Main {
 					post(RequestController::getAllEventType);
 				});
 				path("/employee", ()->{
-					path("/getRequests", ()->{
+					path(getRequests, ()->{
 						post(RequestController::getRequestsByEmployeeID);
 					});
 					path("/submitRequest", ()->{
 						post(RequestController::submitRequest);
 					});
-					path("/editRequest", ()->{
+					path(editRequest, ()->{
 						post(RequestController::editRequestByRequestID);
 					});
 				});
 				path("/manager", ()->{
-					path("/getRequests", ()->{
+					path(getRequests, ()->{
 						post(RequestController::getRequestsByManagerID);
 					});
-					path("/editRequest", ()->{
+					path(editRequest, ()->{
 						post(RequestController::editRequestByManagerID);
 					});
 				});
 				path("/deptHead", ()->{
-					path("/getRequests", ()->{
+					path(getRequests, ()->{
 						post(RequestController::getRequestsByDeptID);
 					});
-					path("/editRequest", ()->{
+					path(editRequest, ()->{
 						post(RequestController::editRequestByDeptID);
 					});
 				});
