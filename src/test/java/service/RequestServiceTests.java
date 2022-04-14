@@ -96,7 +96,7 @@ public class RequestServiceTests {
 		requests.add(requestOne);
 		requests.add(requestTwo);
 		
-		when(requestDAO.getAllRequestsBySubmitterID(2)).thenReturn(requests);
+		when(requestDAO.getAllRequestsBySubmitterID(1)).thenReturn(requests);
 		Set<Request> actualRequests = requestServ.getRequestsByEmployeeID(1);
 
 		assertEquals(2, actualRequests.size());
@@ -109,6 +109,7 @@ public class RequestServiceTests {
 		editRequest.setRequestID(1);
 		
 		doNothing().when(requestDAO).update(editRequest);
+		when(requestDAO.getById(1)).thenReturn(editRequest);
 		
 		Request actualRequest = requestServ.editRequestByRequestID(editRequest);
 		
@@ -124,7 +125,7 @@ public class RequestServiceTests {
 		requestTest.setRequestID(1);
 		
 		requests.add(requestTest);
-		when(requestDAO.getAllRequestsByManagerID(2)).thenReturn(requests);
+		when(requestDAO.getAllRequestsByManagerID(1)).thenReturn(requests);
 		Set<Request> actualRequests = requestServ.getRequestsByManagerID(1);
 		
 		assertEquals(1, actualRequests.size());
@@ -141,7 +142,7 @@ public class RequestServiceTests {
 		requests.add(requestOne);
 		requests.add(requestTwo);
 		
-		when(requestDAO.getAllRequestsByDeptID(2)).thenReturn(requests);
+		when(requestDAO.getAllRequestsByDeptID(1)).thenReturn(requests);
 		Set<Request> actualRequests = requestServ.getRequestsByDeptID(1);
 
 		assertEquals(2, actualRequests.size());

@@ -1,35 +1,75 @@
 <!DOCTYPE html>
-<script src="/js/account.js">
-</script>
+<head>
+	<script src="https://kit.fontawesome.com/8606588693.js" crossorigin="anonymous"></script>
+	<script src="/js/account.js"></script>
+	<link rel="stylesheet" type="text/css" href="./app.css">
+</head>
+
 <body>
-	<div>
-		<form method="post" id="login-form">
-			<label>Login</label><br>
-			<label for="username">User-name</label><br>
-			<input type="text" id="username"><br>
-			<label for="password">Password</label><br>
-			<input type="text" id="password"><br><br>
-			<button id="loginBtn" onclick="logIn()">Submit</button>
-		</form>
-	</div><br>
-	
-	<div>
-			<form method="post" id="register-form" accept-charset="utf-8">
-			<label>Register</label><br>
-			<label for="firstName">First Name</label><br>
-			<input type="text" id="firstName"><br>
-			<label for="lastName">Last Name</label><br>
-			<input type="text" id="lastName"><br>
-			<label for="username">User-name</label><br>
-			<input type="text" id="register-username"><br>
-			<label for="password">Password</label><br>
-			<input type="text" id="register-password"><br><br>
-			<button id="loginBtn" onclick="register()">Register</button>
-		</form>
-	</div><br>
-	
-	<div>
-		<button id="printAll" onclick="printAll()">Print All</button>
+	<!--Title box somewhere-->
+	<div></div>
+	<div id="outer">
+		<div class="formBox">
+			<div class="container">
+				<form enctype="UTF-8">
+				  <div class="row">
+					<div class="title">Login</div>
+					<div class="input-container input-group-icon">
+					  <input class="input" id="username" type="text"  placeholder="Username"/>
+					  <div class="input-icon"><i class="fa fa-user"></i></div>
+					</div>
+					<div class="input-container input-group-icon">
+					  <input class="input" id="password" type="password" placeholder="Password"/>
+					  <div class="input-icon"><i class="fa fa-key"></i></div>
+					</div>
+					<div class="input-container input-group-icon">
+				  		<button class="submit" type="button" onclick="logIn()">Login</button>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+		<div class="formBox">
+			<div class="container">
+				<form id="register-form">
+				  <div class="row">
+					<div class="title">Register</div>
+					<div class="input-container input-group-icon">
+					  <input class="input" type="text" id="firstName" placeholder="First Name"/>
+					  <div class="input-icon"><i class="fa fa-user"></i></div>
+					</div>
+					<div class="input-container input-group-icon">
+						<input class="input" type="text" id="lastName" placeholder="Last Name"/>
+						<div class="input-icon"><i class="fa fa-user"></i></div>
+					  </div>
+					  <div class="input-container input-group-icon">
+						<input class="input" type="text" id="register-username" placeholder="Username"/>
+						<div class="input-icon"><i class="fa fa-user"></i></div>
+					  </div>
+					<div class="input-container input-group-icon">
+					  <input class="input" type="password" id="register-password" placeholder="Password"/>
+					  <div class="input-icon"><i class="fa fa-key"></i></div>
+					</div>
+					<div class="input-container input-group-icon">
+						<input class="input" type="text" id="managerId" placeholder="Manager Id"/>
+						<div class="input-icon"><i class="fa fa-glasses"></i></div>
+					  </div>
+					<div class="input-container input-group-icon">
+						<div class="input-group input">
+							<select class="input" id="departmentId">
+							  <!--add some function to pull from database-->
+							</select>				
+						</div>
+					</div>
+					<div class="input-container input-group-icon">
+				  		<button class="submit" type="button" onclick="register()">Register</button>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
 	</div>
 </body>
 

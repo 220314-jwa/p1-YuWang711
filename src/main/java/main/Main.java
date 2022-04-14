@@ -9,7 +9,6 @@ import database.postgre.*;
 
 public class Main {
 	public static void main(String[] args) {
-	    System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		//Main handles request https requests
 	    //Possibly need a set up function for sql
 	    //Setup block
@@ -17,47 +16,56 @@ public class Main {
 	    //pg_ctl -D "C:\Users\timmy\scoop\apps\postgresql\14.2\data" start
 	    //pg_ctl -D "C:\Users\timmy\scoop\apps\postgresql\14.2\data" stop
 	    //pg_ctl -D "C:\Users\timmy\scoop\apps\postgresql\14.2\data" restart
-
 		Javalin app = Javalin.create(config->{
 				config.enableCorsForAllOrigins();
-				config.addStaticFiles("/html", Location.CLASSPATH);
-		}).start(7077);
+				config.addStaticFiles("./html", Location.CLASSPATH);
+		}).start(8080);
+		
+		
 		
 		app.routes(()->{
-			//localhost:7077/login
 			path("/users", ()->{
 				path("/register",()->{
 					post(UsersController::register);
 				});
+				path("{id}", () -> {
+					get(UsersController::getUserById);
+				});
 				path("/auth", ()->{
 					post(UsersController::login);
 				});
+				path("/getDepartments", ()->{
+					post(UsersController::getDepartments);
+				});
 			});
-			path("/requests", ()->{
+	 		path("/requests", ()->{
+				path("/getEventTypes", ()->{
+					post(RequestController::getAllEventType);
+				});
 				path("/employee", ()->{
-					path("getRequests", ()->{
+					path("/getRequests", ()->{
 						post(RequestController::getRequestsByEmployeeID);
 					});
-					path("submitRequest", ()->{
+					path("/submitRequest", ()->{
 						post(RequestController::submitRequest);
 					});
-					path("editRequest", ()->{
+					path("/editRequest", ()->{
 						post(RequestController::editRequestByRequestID);
 					});
 				});
 				path("/manager", ()->{
-					path("getRequests", ()->{
+					path("/getRequests", ()->{
 						post(RequestController::getRequestsByManagerID);
 					});
-					path("editRequest", ()->{
+					path("/editRequest", ()->{
 						post(RequestController::editRequestByManagerID);
 					});
 				});
 				path("/deptHead", ()->{
-					path("getRequests", ()->{
+					path("/getRequests", ()->{
 						post(RequestController::getRequestsByDeptID);
 					});
-					path("editRequest", ()->{
+					path("/editRequest", ()->{
 						post(RequestController::editRequestByDeptID);
 					});
 				});

@@ -67,7 +67,7 @@ public class EventTypePostgre implements EventTypeDAO{
 	public Set<EventType> getAll() {
 		Set<EventType> eventTypes = new HashSet<EventType>();
 
-		String sql_query = "SELECT * FROM EventType?;";
+		String sql_query = "SELECT * FROM EventType;";
 		try( Connection conn = dbUtil.getConnection();
 			PreparedStatement pStatement = conn.prepareStatement(sql_query);){
 			ResultSet resultSet = pStatement.executeQuery();

@@ -1,6 +1,8 @@
 package main;
 
+import java.time.LocalDate;
 import java.util.Map;
+import java.util.Set;
 
 import exception.RequestSubmittedUnsuccessfully;
 import exception.UsernameAlreadyExistsException;
@@ -13,27 +15,20 @@ public class RequestController {
 	
 	public static void submitRequest(Context ctx) {
 		Map<String,String> credentials = ctx.bodyAsClass(Map.class);
-		String firstName = credentials.get("register-first-name");
-		String lastName = credentials.get("register-last-name");
-		String username = credentials.get("register-username");
-		String password = credentials.get("register-password");
-/*
-  	private int employee_id;
-	private String first_name;
-	private String last_name;
-	private String username;
-	private int manager_id;
-	private int dept_id;
-	private String password;
-	private String salt;
-	protected int test;
- * 
- */
 		Request request = new Request();
-		ctx.status(200);
+
+		request.setSubmitterId(Integer.parseInt(credentials.get("submitterID")));
+		request.setEventTypeId(new EventType(Integer.parseInt(credentials.get("eventTypeID")),""));
+		request.setStatusId(new Status(Integer.parseInt(credentials.get("statusID")),""));
+		request.setEventDate(LocalDate.parse(credentials.get("eventDate")).toString());
+		request.setCost(Double.parseDouble(credentials.get("costs")));
+		request.setDescription(credentials.get("description"));
+		request.setLocation(credentials.get("location"));
+		request.setSubmittedAt(credentials.get("submittedAt"));
 		try {
-			ctx.status(HttpCode.CREATED);
-			requestServiceImpl.submitRequest(request);
+			int requestID = requestServiceImpl.submitRequest(request);
+			ctx.json(requestID);
+			ctx.status(200);			
 			//Not sure what to return but its fine.
 		} catch (RequestSubmittedUnsuccessfully e) {
 			//Need to write some homemade exception
@@ -44,28 +39,92 @@ public class RequestController {
 	
 	public static void getRequestsByEmployeeID(Context ctx){
 		Map<String,String> credentials = ctx.bodyAsClass(Map.class);
-
+		
+		int employeeID = Integer.parseInt(credentials.get("employeeID"));
+		
+		Set<Request> requests = requestServiceImpl.getRequestsByEmployeeID(employeeID);
+		System.out.println("getrequests");
+		ctx.json(requests);
+		ctx.status(200);	
 	}
 	
 	public static void editRequestByRequestID(Context ctx) {
 		Map<String,String> credentials = ctx.bodyAsClass(Map.class);
+		Request request = new Request();
 
+		request.setRequestID(Integer.parseInt(credentials.get("requestID")));
+		request.setSubmitterId(Integer.parseInt(credentials.get("submit	terID")));
+		request.setEventTypeId(new EventType(Integer.parseInt(credentials.get("eventTypeID")),""));
+		request.setStatusId(new Status(Integer.parseInt(credentials.get("statusID")),""));
+		request.setEventDate(LocalDate.parse(credentials.get("eventDate")).toString());
+		request.setCost(Double.parseDouble(credentials.get("costs")));
+		request.setDescription(credentials.get("description"));
+		request.setLocation(credentials.get("location"));
+		request.setSubmittedAt(credentials.get("submittedAt"));
+		//try {
+			ctx.status(HttpCode.CREATED);
+			requestServiceImpl.editRequestByRequestID(request);
+			ctx.status(200);			
+			//Not sure what to return but its fine.
+		//} catch (RequestSubmittedUnsuccessfully e) {
+		//	//Need to write some homemade exception
+		//	ctx.status(401);
+		//	ctx.result(e.getMessage());
+		//} 
 	}
 	
 	public static void getRequestsByManagerID(Context ctx) {
 		Map<String,String> credentials = ctx.bodyAsClass(Map.class);
+		
+		int managerID = Integer.parseInt(credentials.get("managerID"));
+		Set<Request> requests = requestServiceImpl.getRequestsByManagerID(managerID);
+		ctx.json(requests);
+		ctx.status(200);	
 
 	}
 	public static void editRequestByManagerID(Context ctx) {
 		Map<String,String> credentials = ctx.bodyAsClass(Map.class);
+		Request request = new Request();
 
+		request.setRequestID(Integer.parseInt(credentials.get("requestID")));
+		request.setStatusId(new Status(Integer.parseInt(credentials.get("statusID")),""));
+
+		//try {
+			ctx.status(HttpCode.CREATED);
+			requestServiceImpl.editRequestByRequestID(request);
+			ctx.status(200);	
 	}
 	public static void getRequestsByDeptID(Context ctx) {
 		Map<String,String> credentials = ctx.bodyAsClass(Map.class);
+		
+		int deptHeadID = Integer.parseInt(credentials.get("deptHeadID"));
+		Set<Request> requests = requestServiceImpl.getRequestsByDeptID(deptHeadID);
+		ctx.json(requests);
+		ctx.status(200);	
 
 	}
 	public static void editRequestByDeptID(Context ctx) {
 		Map<String,String> credentials = ctx.bodyAsClass(Map.class);
+		Request request = new Request();
 
+		request.setRequestID(Integer.parseInt(credentials.get("requestID")));
+		request.setSubmitterId(Integer.parseInt(credentials.get("submitterID")));
+		request.setEventTypeId(new EventType(Integer.parseInt(credentials.get("eventTypeID")),""));
+		request.setStatusId(new Status(Integer.parseInt(credentials.get("statusID")),""));
+		request.setEventDate(LocalDate.parse(credentials.get("eventDate")).toString());
+		request.setCost(Double.parseDouble(credentials.get("costs")));
+		request.setDescription(credentials.get("description"));
+		request.setLocation(credentials.get("location"));
+		request.setSubmittedAt(credentials.get("submittedAt"));
+		//try {
+			ctx.status(HttpCode.CREATED);
+			requestServiceImpl.editRequestByRequestID(request);
+			ctx.status(200);	
+	}
+	
+	public static void getAllEventType(Context ctx) {
+		Set<EventType> eventType = requestServiceImpl.getAllEventType();
+		ctx.json(eventType);
+		ctx.status(200);
 	}
 }
