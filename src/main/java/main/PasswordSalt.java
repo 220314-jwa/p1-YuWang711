@@ -34,7 +34,6 @@ public class PasswordSalt {
 										  String salt,
 										  String storePassword)
 		throws NoSuchAlgorithmException, InvalidKeySpecException{
-		
 		byte[] saltInByte = fromHex(salt);
 		byte[] passwordInByte = fromHex(storePassword);
 	    PBEKeySpec spec = new PBEKeySpec(inputPassword.toCharArray(), 

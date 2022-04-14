@@ -169,18 +169,14 @@ public class RequestPostgre implements RequestDAO{
  * 
  */
 		String sql_query = "UPDATE REQUESTS "
-				+ "SET Event_date = ?,Costs = ?,Description = ?,"
-				+ "Locations = ? "
+				+ "SET Status_ID = ? "
 				+ "WHERE ID = ?;";
 		try( Connection conn = dbUtil.getConnection();
 			PreparedStatement pStatement = conn.prepareStatement(sql_query);){
 			conn.setAutoCommit(false);
 			
-			pStatement.setString(1, dataToUpdate.getEventDate().toString());
-			pStatement.setDouble(2, dataToUpdate.getCost());
-			pStatement.setString(3, dataToUpdate.getDescription());
-			pStatement.setString(4, dataToUpdate.getLocation());
-			pStatement.setInt(5, dataToUpdate.getRequestID());
+			pStatement.setInt(1, dataToUpdate.getStatusId().getStatus());
+			pStatement.setInt(2, dataToUpdate.getRequestID());
 			int rowsAffected = pStatement.executeUpdate();
 			
 			boolean requestUpdated = true;
@@ -242,8 +238,9 @@ public class RequestPostgre implements RequestDAO{
 		Set<Request> requests = new HashSet<Request>();
 		//fix the sql query
 		//Need to rewrite the query
-		String sql_query = "SELECT REQUESTS.ID,Event_type_id,Status_id,Event_date,"
-				+ "Costs,Description,Locations,Submitted_at FROM REQUESTS WHERE Submitter_id = ?;";
+		String sql_query = "SELECT REQUESTS.ID,Submitter_id,Event_type_id,EventType.EventTypeName,Status_id,Status.StatusName,Event_date,"
+				+ "Costs,Description,Locations,Submitted_at FROM REQUESTS,Status,EventType WHERE Submitter_id = ? AND"
+				+ " REQUESTS.Status_id = Status.ID AND REQUESTS.Event_type_id = EventType.ID;";
 		try( Connection conn = dbUtil.getConnection();
 			PreparedStatement pStatement = conn.prepareStatement(sql_query);){
 			pStatement.setInt(1, SubmitterID);
@@ -251,11 +248,12 @@ public class RequestPostgre implements RequestDAO{
 			
 			while(resultSet.next()) {
 				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"),df);
-				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),"");
-				Status statusID = new Status(resultSet.getInt("Status_id"),"");
+				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),resultSet.getString("EventTypeName"));
+				Status statusID = new Status(resultSet.getInt("Status_id"),resultSet.getString("StatusName"));
 				Request request = new Request();
 				
 				request.setRequestID(resultSet.getInt("ID"));
+				request.setSubmitterId(resultSet.getInt("Submitter_id"));
 				request.setEventTypeId(eventTypeID);
 				request.setStatusId(statusID);
 				request.setEventDate(date.toString());
@@ -277,9 +275,11 @@ public class RequestPostgre implements RequestDAO{
 		Set<Request> requests = new HashSet<Request>();
 		//fix the sql query
 		//Should i use subquery?
-		String sql_query = "SELECT REQUESTS.ID,Event_type_id,Status_id,Event_date,Costs,Description,Locations,Submitted_at FROM REQUESTS "
-				+ "	inner join Employee on REQUESTS.submitter_id = Employee.id and Employee.Department_ID  = ? "
-				+ "	inner join department on Employee.id = department.deptheadid and Employee.department_id  = department.id;";
+		String sql_query = "SELECT RQ.ID,Submitter_id,RQ.Event_type_id,ET.EventTypeName,RQ.Status_id,S.StatusName,RQ.Event_date "
+				+",RQ.Costs,RQ.Description,RQ.Locations,RQ.Submitted_at FROM (requests as RQ inner join employee "
+				+"		on RQ.submitter_id = employee.id "
+				+"		inner join department d on employee.department_id = d.id and d.deptheadid = ?),eventtype ET, status as S "
+				+"	 WHERE RQ.Status_id = S.ID AND RQ.Event_type_id = ET.ID AND RQ.Status_id = 2;";
 		try( Connection conn = dbUtil.getConnection();
 			PreparedStatement pStatement = conn.prepareStatement(sql_query);){
 			pStatement.setInt(1, DeptID);
@@ -287,11 +287,12 @@ public class RequestPostgre implements RequestDAO{
 			
 			while(resultSet.next()) {
 				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"),df);
-				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),"");
-				Status statusID = new Status(resultSet.getInt("Status_id"),"");
+				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),resultSet.getString("EventTypeName"));
+				Status statusID = new Status(resultSet.getInt("Status_id"),resultSet.getString("StatusName"));
 				Request request = new Request();
 					
 				request.setRequestID(resultSet.getInt("ID"));
+				request.setSubmitterId(resultSet.getInt("Submitter_id"));
 				request.setEventTypeId(eventTypeID);
 				request.setStatusId(statusID);
 				request.setEventDate(date.toString());
@@ -311,8 +312,10 @@ public class RequestPostgre implements RequestDAO{
 	public Set<Request> getAllRequestsByManagerID(int ManagerID) {
 		Set<Request> requests = new HashSet<Request>();
 		//fix the sql query
-		String sql_query = "SELECT REQUESTS.ID,Event_type_id,Status_id,Event_date,Costs,Description,Locations,Submitted_at FROM REQUESTS "
-				+ "	inner join Employee on REQUESTS.submitter_id = Employee.id and Employee.manager_id  = ?;";
+		String sql_query = "SELECT RQ.ID,Submitter_id,RQ.Event_type_id,ET.EventTypeName,RQ.Status_id,S.StatusName,RQ.Event_date "
+				+	",RQ.Costs,RQ.Description,RQ.Locations,RQ.Submitted_at FROM (requests as RQ inner join employee "
+				+	"	on RQ.submitter_id = employee.id and employee.manager_id = ?),eventtype ET, status as S "
+					+" WHERE RQ.Status_id = S.ID AND RQ.Event_type_id = ET.ID AND RQ.Status_id = 1;";
 		try( Connection conn = dbUtil.getConnection();
 			PreparedStatement pStatement = conn.prepareStatement(sql_query);){
 			pStatement.setInt(1, ManagerID);
@@ -320,12 +323,13 @@ public class RequestPostgre implements RequestDAO{
 			
 			while(resultSet.next()) {
 				LocalDate date = LocalDate.parse(resultSet.getString("Event_date"),df);
-				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),"");
-				Status statusID = new Status(resultSet.getInt("Status_id"),"");
+				EventType eventTypeID = new EventType(resultSet.getInt("Event_type_id"),resultSet.getString("EventTypeName"));
+				Status statusID = new Status(resultSet.getInt("Status_id"),resultSet.getString("StatusName"));
 				Request request = new Request();
 				
 	
 				request.setRequestID(resultSet.getInt("ID"));
+				request.setSubmitterId(resultSet.getInt("Submitter_id"));
 				request.setEventTypeId(eventTypeID);
 				request.setStatusId(statusID);
 				request.setEventDate(date.toString());

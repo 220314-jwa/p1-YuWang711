@@ -1,5 +1,6 @@
 package service;
 
+import main.Department;
 import main.Employee;
 import database.postgre.*;
 import exception.IncorrectCredentialExcception;
@@ -7,7 +8,9 @@ import exception.UsernameAlreadyExistsException;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Set;
 
+import database.DepartmentDAO;
 import database.EmployeeDAO;
 
 import main.PasswordSalt;
@@ -20,6 +23,7 @@ import main.PasswordSalt;
 
 public class EmployeeService implements UserService<Employee> {
 	private EmployeeDAO employee = new EmployeePostgre();
+	private DepartmentDAO department = new DepartmentPostgre();
 	@Override
 	public int register(Employee userType) throws UsernameAlreadyExistsException {
 		//Need to check if account/user exist.
@@ -50,6 +54,9 @@ public class EmployeeService implements UserService<Employee> {
 		String[] saltAndHash = employee.getSaltAndHashByUserName(userType.getUsername());
 		
 		try {
+			if(saltAndHash == null) {
+				throw new IncorrectCredentialExcception();
+			}
 			boolean validate = PasswordSalt.validatePassword(userType.getPassword(), saltAndHash[0], saltAndHash[1]);	
 			if(validate) {
 				int employeeID = employee.getIdByUsername(userType.getUsername());
@@ -58,11 +65,21 @@ public class EmployeeService implements UserService<Employee> {
 			} else {
 				throw new IncorrectCredentialExcception();
 			}
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException | NullPointerException e) {
 			e.printStackTrace();
 		}
 		
 		return null;
+	}
+
+	@Override
+	public Employee getEmployeeByID(int id) {
+		return employee.getById(id);
+	}
+
+	@Override
+	public Set<Department> getDepartments() {
+		return department.getAll();
 	}
 	
 

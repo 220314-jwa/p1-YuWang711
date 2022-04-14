@@ -26,8 +26,8 @@ public class RequestController {
 		request.setLocation(credentials.get("location"));
 		request.setSubmittedAt(credentials.get("submittedAt"));
 		try {
-			ctx.status(HttpCode.CREATED);
-			requestServiceImpl.submitRequest(request);
+			int requestID = requestServiceImpl.submitRequest(request);
+			ctx.json(requestID);
 			ctx.status(200);			
 			//Not sure what to return but its fine.
 		} catch (RequestSubmittedUnsuccessfully e) {
@@ -78,6 +78,7 @@ public class RequestController {
 		
 		int managerID = Integer.parseInt(credentials.get("managerID"));
 		Set<Request> requests = requestServiceImpl.getRequestsByManagerID(managerID);
+		ctx.json(requests);
 		ctx.status(200);	
 
 	}
@@ -86,14 +87,8 @@ public class RequestController {
 		Request request = new Request();
 
 		request.setRequestID(Integer.parseInt(credentials.get("requestID")));
-		request.setSubmitterId(Integer.parseInt(credentials.get("submitterID")));
-		request.setEventTypeId(new EventType(Integer.parseInt(credentials.get("eventTypeID")),""));
 		request.setStatusId(new Status(Integer.parseInt(credentials.get("statusID")),""));
-		request.setEventDate(LocalDate.parse(credentials.get("eventDate")).toString());
-		request.setCost(Double.parseDouble(credentials.get("costs")));
-		request.setDescription(credentials.get("description"));
-		request.setLocation(credentials.get("location"));
-		request.setSubmittedAt(credentials.get("submittedAt"));
+
 		//try {
 			ctx.status(HttpCode.CREATED);
 			requestServiceImpl.editRequestByRequestID(request);
@@ -103,7 +98,8 @@ public class RequestController {
 		Map<String,String> credentials = ctx.bodyAsClass(Map.class);
 		
 		int deptHeadID = Integer.parseInt(credentials.get("deptHeadID"));
-		Set<Request> requests = requestServiceImpl.getRequestsByManagerID(deptHeadID);
+		Set<Request> requests = requestServiceImpl.getRequestsByDeptID(deptHeadID);
+		ctx.json(requests);
 		ctx.status(200);	
 
 	}
@@ -124,5 +120,11 @@ public class RequestController {
 			ctx.status(HttpCode.CREATED);
 			requestServiceImpl.editRequestByRequestID(request);
 			ctx.status(200);	
+	}
+	
+	public static void getAllEventType(Context ctx) {
+		Set<EventType> eventType = requestServiceImpl.getAllEventType();
+		ctx.json(eventType);
+		ctx.status(200);
 	}
 }

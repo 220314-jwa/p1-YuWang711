@@ -28,11 +28,6 @@
     color:white;
 }
 
-#requestCenter{
-    margin-left:5%;
-    margin-right:5%;
-    width:inherit;
-}
 .request-id-label{
     border: solid 1px #8BBEB2;
     background-color: #18314F;
@@ -40,12 +35,21 @@
     font-size: 20px;
 }
 
-.request-container{
-    z-index: 1;
-}
-
 .tabcontent{
     display:none;
+    z-index: 1;
+    margin-left:5%;
+    margin-right:5%;
+    width:inherit;
+}
+
+.request-border-label{
+    border: solid 2px #18314F;
+    background-color: #384E77 ;
+    color: white;
+    font-size: 26px;
+    width: inherit;
+    padding: 15px;
 }
 /*
     color template:
@@ -107,14 +111,12 @@ html, body {
     padding: 7px 0;
     border-radius: 3px;
     border: 1px solid #ccc;
-    background: transparent;
     }
     select, table {
     width: 100%;
     }
     option{
-        background-color: #384E77;
-        color: white;
+        color: black;
     }
     .day-visited, .time-visited {
     position: relative;

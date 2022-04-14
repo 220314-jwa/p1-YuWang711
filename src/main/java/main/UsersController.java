@@ -3,6 +3,7 @@ import java.sql.Connection;
 
 import java.sql.DriverManager;
 import java.util.Map;
+import java.util.Set;
 
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
@@ -29,14 +30,16 @@ public class UsersController {
 		String lastName = credentials.get("lastName");
 		String username = credentials.get("username");
 		String password = credentials.get("password"); 
+		int deptID = Integer.parseInt(credentials.get("departmentId"));
+		int managerID = Integer.parseInt(credentials.get("managerId"));
 
 		Employee newEmployee = new Employee();
 		newEmployee.setFirstName(firstName);
 		newEmployee.setLastName(lastName);
 		newEmployee.setUsername(username);		
 		newEmployee.setPassword(password);
-		newEmployee.setDeptID(1);
-		newEmployee.setManagerID(1);
+		newEmployee.setDeptID(deptID);
+		newEmployee.setManagerID(managerID);
 		
 		try {
 			int id = employeeServ.register(newEmployee);
@@ -60,15 +63,39 @@ public class UsersController {
 		Employee newEmployee = new Employee();
 		newEmployee.setUsername(username);
 		newEmployee.setPassword(password);
+		System.out.println("requestCenter.html");
 		try {
 			Employee employee = employeeServ.logIn(newEmployee);
-			ctx.json(employee);
+			ctx.json(employee.getEmployeeID());
 			ctx.status(200);
 		} catch (IncorrectCredentialExcception e) {
 			ctx.status(401);
 			ctx.result(e.getMessage());
 		}
+	}
+	
+	public static void getUserById(Context ctx) {
+		String pathParam = ctx.pathParam("id");
+		if (pathParam != null && !pathParam.equals("undefined") && !pathParam.equals("null")) {
+			int userId = Integer.parseInt(pathParam);
+			
+			Employee employee = employeeServ.getEmployeeByID(userId);
+			if (employee != null) {
+				ctx.json(employee);
+			}
+			else {
+				ctx.status(HttpCode.NOT_FOUND); // 404 not found
+			}
+		} else {
+			ctx.status(HttpCode.BAD_REQUEST); // 400 bad request
+		}
 
+	}
+	
+	public static void getDepartments(Context ctx) {
+		Set<Department> departments = employeeServ.getDepartments();
+		ctx.json(departments);
+		ctx.status(200);
 	}
 	
 

@@ -15,13 +15,62 @@
   </head>
   <body>
       <div class="tab">
-        <button class="tablinks" onclick="openEventTab(event, 'requestCenter')">View Requests</button>
-        <button class="tablinks" onclick="openEventTab(event, 'pendingRequest')">Pending on Your Response</button>
+        <button class="tablinks" onclick="openEventTab(event, 'requestCenter'); getRequestByEmployeeID();">View Your Requests</button>
+        <button class="tablinks" onclick="openEventTab(event, 'pendingRequest'); getRequestByDeptHeadID(); getRequestByManagerID();">Pending on Your Response</button>
         <button class="tablinks" onclick="openEventTab(event, 'createRequest')">Create Request</button>
+        <button class="tablinks" onclick="LogOut()"> Log Out</button>
         </div>
           <div id="requestCenter" class="tabcontent">
-            <div class="request-container" >
-              <div class="request-id-label" onclick="toggleRequestDisplay(this);">
+              
+          </div>
+        </div>
+
+        <div id="pendingRequest" class="tabcontent">
+            <div>
+              <div class="request-border-label">Required Action as Manager:</div>
+              <div id="manager-request"></div>
+              
+            </div>
+            <div>
+              <div class="request-border-label">Required Action as Department Head:</div>
+              <div id="department-request"></div>
+
+            </div>
+
+        </div>
+
+
+
+        <div id="createRequest" class="tabcontent">
+            <!-- [                        +create a request]-->
+            <!-- [                                         ]-->
+            <!--Add functions-->
+            <form action="/" class="rForm" id="submitForm">
+              <div class="title">Reimbursement Request Form</div>
+              <div>Event Type<span>*</span></div>
+              <select id="eventType">
+              </select>
+              <div>Location<span>*</span></div>
+              <input type="text" id="location"/>
+              <div>Costs<span>*</span></div>
+              <input type="text" id="costs"/>
+              <div>Event Date</div>
+              <input type="date" id="eventDate"/>
+              <div>Description</div>
+              <textarea rows="5" id="description"></textarea>
+              <div class="btn-block">
+              <button type="button" onclick="submitRequest()">Submit Request</button>
+              </div>
+          </form>
+        </div>    
+  </body>
+</html>
+
+
+
+<!--
+  Request Template
+  <div class="request-id-label" onclick="toggleRequestDisplay(this);">
                   sample request
               </div>
               <div class="request-content" style="display:none;">
@@ -74,43 +123,4 @@
                   </div>
                 </div>
             </div>
-          </div>
-        </div>
-
-        <div id="pendingRequest" class="tabcontent">
-
-        </div>
-
-
-
-        <div id="createRequest" class="tabcontent">
-            <!-- [                        +create a request]-->
-            <!-- [                                         ]-->
-            <!--Add functions-->
-            <form action="/" class="rForm"">
-              <div class="title">Reimbursement Request Form</div>
-              <div>Event Type<span>*</span></div>
-              <select id="eventType">
-                <option value=""></option>
-                <option value="1">sample</option>
-              </select>
-              <div>Name<span>*</span></div>
-              <div class="title-block">
-                <input class="name" type="text" name="name" placeholder="First" />
-                <input class="name" type="text" name="name" placeholder="Last" />
-              </div>
-              <div>Location<span>*</span></div>
-              <input type="text" name="name" />
-              <div>Costs<span>*</span></div>
-              <input type="text" name="name"/>
-              <div>Event Date</div>
-              <input type="date" name="name"/>
-              <div>Description</div>
-              <textarea rows="5"></textarea>
-              <div class="btn-block">
-              <button type="submit" href="/">Submit Request</button>
-              </div>
-          </form>
-        </div>    
-  </body>
-</html>
+-->
