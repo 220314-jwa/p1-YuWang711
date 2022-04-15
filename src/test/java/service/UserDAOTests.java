@@ -18,7 +18,7 @@ import exception.UsernameAlreadyExistsException;
 
 public class UserDAOTests {
 	private EmployeeDAO employeeDAO = new EmployeePostgre();
-	private int testID;
+	private static int testID;
 	private static String FirstName = "test_fist";
 	private static String LastName = "test_last";
 	private static int ManagerID = 200;
@@ -80,7 +80,8 @@ public class UserDAOTests {
 	void getIdByUsername() {
 		//setting up passwords
 		int employeeID = employeeDAO.getIdByUsername(Username);
-		assertEquals(testID, employeeID);
+		int id = testID;
+		assertEquals(id, employeeID);
 	}
 	@Test
     @Order(5)
