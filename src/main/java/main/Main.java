@@ -3,8 +3,11 @@ import io.javalin.Javalin;
 
 import io.javalin.http.HttpCode;
 import io.javalin.http.staticfiles.Location;
+
 import static io.javalin.apibuilder.ApiBuilder.*;
 
+import controller.RequestController;
+import controller.UsersController;
 import database.postgre.*;
 
 public class Main {
@@ -25,10 +28,7 @@ public class Main {
 				config.addStaticFiles("./html", Location.CLASSPATH);
 		}).start(8080);
 		
-		
-		
-		
-		
+
 		app.routes(()->{
 			path("/users", ()->{
 				path("/register",()->{

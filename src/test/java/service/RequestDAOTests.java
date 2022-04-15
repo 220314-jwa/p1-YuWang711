@@ -15,6 +15,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import beans.Employee;
+import beans.EventType;
+import beans.Request;
+import beans.Status;
 import database.DepartmentDAO;
 import database.EmployeeDAO;
 import database.EventTypeDAO;
@@ -25,10 +29,6 @@ import database.postgre.EmployeePostgre;
 import database.postgre.EventTypePostgre;
 import database.postgre.RequestPostgre;
 import database.postgre.StatusPostgre;
-import main.Employee;
-import main.EventType;
-import main.Request;
-import main.Status;
 
 @ExtendWith(MockitoExtension.class)
 public class RequestDAOTests {

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+import beans.Employee;
 import database.EmployeeDAO;
 import database.util.DatabaseUtil;
-import main.Employee;
 
 
 public class EmployeePostgre implements EmployeeDAO{

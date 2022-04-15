@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+import beans.Department;
+import beans.Employee;
 import database.DepartmentDAO;
 import database.util.DatabaseUtil;
-import main.Department;
-import main.Employee;
 
 public class DepartmentPostgre implements DepartmentDAO{
 	private static DatabaseUtil dbUtil = DatabaseUtil.getConnectionUtil();

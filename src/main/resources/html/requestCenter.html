@@ -15,12 +15,12 @@
   </head>
   <body>
       <div class="tab">
-        <button class="tablinks" onclick="openEventTab(event, 'requestCenter'); getRequestByEmployeeID();">View Your Requests</button>
-        <button class="tablinks" onclick="openEventTab(event, 'pendingRequest'); getRequestByDeptHeadID(); getRequestByManagerID();">Pending on Your Response</button>
-        <button class="tablinks" onclick="openEventTab(event, 'createRequest')">Create Request</button>
-        <button class="tablinks" onclick="LogOut()"> Log Out</button>
+        <button class="tablinks" id="requestCenterTab" onclick="openEventTab(event, 'viewRequest'); getRequestByEmployeeID();">View Your Requests</button>
+        <button class="tablinks" id="pendingRequestTab" onclick="openEventTab(event, 'pendingRequest'); getRequestByDeptHeadID(); getRequestByManagerID();">Pending on Your Response</button>
+        <button class="tablinks" id="createRequestTab" onclick="openEventTab(event, 'createRequest')">Create Request</button>
+        <button class="tablinks" id="logOut" onclick="LogOut()"> Log Out</button>
         </div>
-          <div id="requestCenter" class="tabcontent">
+          <div id="viewRequest" class="tabcontent">
               
           </div>
         </div>
@@ -59,7 +59,7 @@
               <div>Description</div>
               <textarea rows="5" id="description"></textarea>
               <div class="btn-block">
-              <button type="button" onclick="submitRequest()">Submit Request</button>
+              <button type="button" id="submitARequest" onclick="submitRequest()">Submit Request</button>
               </div>
           </form>
         </div>    

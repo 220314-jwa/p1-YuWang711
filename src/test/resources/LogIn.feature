@@ -16,7 +16,8 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
+
+@login
 Feature: User Account 
 	#	User can create account and register for the service.
 	Background: three user, employee, manager, and department head
@@ -24,38 +25,82 @@ Feature: User Account
 
   Scenario: successful register
     Given the user is on the login page
-    When the user enters their first name
-    And the user enters their last name
-    And the user enters a username
-    And the user enters a password
-    And the user enters his/her manager ID
-    And the user select his department
+    When the user enters their first name in register form
+    And the user enters their last name in register form
+    And the user enters username "usertest1" in register form
+    And the user enters password "usertest1" in register form
+    And the user enters their manager ID in register form
+    And the user select his department in register form
     And the user clicks the register button
     Then an Alert will tell you that you register successfully
 
   Scenario: username already existed
     Given the user is on the login page
-    When the user enters their first name
-    And the user enters their last name
-    And the user enters a username
-    And the user enters a password
-    And the user enters his/her manager ID
-    And the user select his department
+    When the user enters their first name in register form
+    And the user enters their last name in register form
+    And the user enters username "usertest1" in register form again
+    And the user enters password "usertest1" in register form again
+    And the user enters their manager ID in register form
+    And the user select his department in register form
     And the user clicks the register button
     Then an Alert will tell you that your username has been taken
-    
+ 
+ 	Scenario: user does not exist
+    Given the user is on the login page
+    When the user enters username "usernotexist" in login form for user does not exist
+    And the user enters password "usernotexist" in login form for user does not exist
+    And the user clicks the login button
+    Then an alert will shows up with the message "User does not exist"
+ 
+  	Scenario: incorrect credential
+    Given the user is on the login page
+    When the user enters username "usertest1" in login form for inorrect credential
+    And the user enters password "usernotexist" in login form for inorrect credential
+    And the user clicks the login button
+    Then an alert will shows up with the message "Incorrect Username or Password"
+ 
   Scenario: successful login
     Given the user is on the login page
-    When the user enters a username
-    And the user enters a password
+    When the user enters username "usertest1" in login form
+    And the user enters password "usertest1" in login form
     And the user clicks the login button
     Then the page will go into request center page.
     
-	Scenario: incorrect credential
-    Given the user is on the login page
-    When the user enters a username
-    And the user enters a password
-    And the user clicks the login button
-    Then an alert will shows up with the message "incorrect credential"
+  Scenario: Submit a request
+  	Given the user is log in
+  	When the user click on create request button on the top left
+  	And the user fill out the form
+  	And the user click submit request
+  	Then an alert will say "request submit successfully" and the request ID
+  	
+  	
+  Scenario: View Request
+  	Given the user is log in
+  	When the user click on "View Your Requests" button on the top left
+  	Then request will shows up with their ID
+  	
+  Scenario: Manager View Submitted Request
+    Given the user is log in
+  	When the user click on "Pending on Your Response" button on the top left
+  	Then requests from employees that has your user ID 
+  	And their manager ID and the request that are pending on your response will show up
 
+  Scenario: User Accept a Request
+    Given the user is log in
+  	When the user click on "Pending on Your Response" button on the top left
+  	And the user clicks on a request
+  	And the user clicks on accept 
+  	Then the request will be updated and your pending request will be accepted
 
+  Scenario: User Reject a Request
+    Given the user is log in
+  	When the user click on "Pending on Your Response" button on the top left
+  	And the user clicks on a request
+  	And the user clicks on reject 
+  	Then the request will be updated and your pending request will be rejected
+  	
+  Scenario: Department Head View Submitted Request
+    Given the user is log in
+  	When the user click on "Pending on Your Response" button on the top left
+  	Then requests from employees that are in your department 
+  	And the requests that are pending on your response will show up

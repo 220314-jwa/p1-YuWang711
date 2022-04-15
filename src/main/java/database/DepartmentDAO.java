@@ -1,6 +1,6 @@
 package database;
 
-import main.Department;
+import beans.Department;
 
 public interface DepartmentDAO extends GenericDAO<Department>{
 	

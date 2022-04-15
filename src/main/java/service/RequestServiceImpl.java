@@ -5,6 +5,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import beans.Department;
+import beans.EventType;
+import beans.Request;
+import beans.Status;
 import database.DepartmentDAO;
 import database.RequestDAO;
 import database.EventTypeDAO;
@@ -14,10 +18,6 @@ import database.postgre.RequestPostgre;
 import database.postgre.EventTypePostgre;
 import database.postgre.StatusPostgre;
 import exception.RequestSubmittedUnsuccessfully;
-import main.Department;
-import main.EventType;
-import main.Request;
-import main.Status;
 
 public class RequestServiceImpl implements RequestService{
 	private DepartmentDAO departmentDAO = new DepartmentPostgre();

@@ -20,6 +20,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import beans.Employee;
+import beans.Request;
 import database.DepartmentDAO;
 import database.EmployeeDAO;
 import database.EventTypeDAO;
@@ -32,8 +34,6 @@ import database.postgre.StatusPostgre;
 import exception.IncorrectCredentialExcception;
 import exception.RequestSubmittedUnsuccessfully;
 import exception.UsernameAlreadyExistsException;
-import main.Employee;
-import main.Request;
 
 @ExtendWith(MockitoExtension.class)
 public class RequestServiceTests {

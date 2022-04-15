@@ -51,8 +51,10 @@ async function logIn(){
 		sessionStorage.setItem('Auth-Token', loggedInUser);
 
 		await checkLogin();
-	} else {
-		let msg = await response.text();
+	} else if(response.status === 401) {
+		alert("User does not exist");
+	} else if(response.status === 402){
+		alert("Incorrect Username or Password");
 	}
 };
 
@@ -81,8 +83,8 @@ async function register(){
 	if(response.status === 201){
 		document.getElementById("register-form").reset();
 		alert("register successfully");
-	} else if (response.status === 400){
-		alert("invalid input");
+	} else if (response.status === 401){
+		alert("username has been taken");
 	}
 
 };
