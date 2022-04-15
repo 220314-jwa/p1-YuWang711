@@ -8,12 +8,12 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import beans.Department;
+import beans.EventType;
+import beans.Request;
+import beans.Status;
 import database.StatusDAO;
 import database.util.DatabaseUtil;
-import main.Department;
-import main.Request;
-import main.EventType;
-import main.Status;
 
 public class StatusPostgre implements StatusDAO{
 	// create table query, CREATE TABLE Status (ID SERIAL PRIMARY KEY NOT NULL, StatusType String NOT NULL);

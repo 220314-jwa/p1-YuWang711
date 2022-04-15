@@ -1,6 +1,6 @@
 package database;
 
-import main.Employee; // Need to Change this later
+import beans.Employee;
 
 public interface EmployeeDAO extends GenericDAO<Employee> {
 	public int getIdByUsername(String user);

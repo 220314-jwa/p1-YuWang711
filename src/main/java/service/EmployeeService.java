@@ -1,19 +1,19 @@
 package service;
 
-import main.Department;
-import main.Employee;
 import database.postgre.*;
 import exception.IncorrectCredentialExcception;
+import exception.UserNotExistException;
 import exception.UsernameAlreadyExistsException;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Set;
 
+import beans.Department;
+import beans.Employee;
+import controller.PasswordSalt;
 import database.DepartmentDAO;
 import database.EmployeeDAO;
-
-import main.PasswordSalt;
 
 //class where DAO is declared and communicate with Database happens
 //Employee service should contain
@@ -49,13 +49,13 @@ public class EmployeeService implements UserService<Employee> {
 	}
 
 	@Override
-	public Employee logIn(Employee userType) throws IncorrectCredentialExcception{
+	public Employee logIn(Employee userType) throws IncorrectCredentialExcception, UserNotExistException{
 		
 		String[] saltAndHash = employee.getSaltAndHashByUserName(userType.getUsername());
 		
 		try {
 			if(saltAndHash == null) {
-				throw new IncorrectCredentialExcception();
+				throw new UserNotExistException();
 			}
 			boolean validate = PasswordSalt.validatePassword(userType.getPassword(), saltAndHash[0], saltAndHash[1]);	
 			if(validate) {

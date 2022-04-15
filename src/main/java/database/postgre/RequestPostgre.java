@@ -11,16 +11,11 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import beans.EventType;
+import beans.Request;
+import beans.Status;
 import database.RequestDAO;
 import database.util.DatabaseUtil;
-import main.Request;
-import main.EventType;
-/*
-Select request FROM request r, employee e
-WHERE r.submitter_ID = (SELECT employeeID from
-Employee where managerID = currentemployeeID)
-*/
-import main.Status;
 
 public class RequestPostgre implements RequestDAO{
 	private static DatabaseUtil dbUtil = DatabaseUtil.getConnectionUtil();

@@ -1,22 +1,4 @@
-#Author: your.email@your.domain.com
-#Keywords Summary :
-#Feature: List of scenarios.
-#Scenario: Business rule through list of steps with arguments.
-#Given: Some precondition step
-#When: Some key actions
-#Then: To observe outcomes or validation
-#And,But: To enumerate more Given,When,Then steps
-#Scenario Outline: List of steps for data-driven as an Examples and <placeholder>
-#Examples: Container for s table
-#Background: List of steps run before each of the scenarios
-#""" (Doc Strings)
-#| (Data Tables)
-#@ (Tags/Labels):To group Scenarios
-#<> (placeholder)
-#""
-## (Comments)
-#Sample Feature Definition Template
-@tag
+@request
 Feature: Requests Feature
 	# user can submit reimbursement request to their
 	# manager and department head
@@ -57,7 +39,7 @@ Feature: Requests Feature
   	And the user clicks on accept 
   	Then the request will be updated and your pending request will also be updated
 
-  Scenario: User Accept a Request
+  Scenario: User Reject a Request
     Given the user is log in
   	When the user click on "Pending on Your Response" button on the top left
   	And the user clicks on a request

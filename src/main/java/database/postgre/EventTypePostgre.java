@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+import beans.Department;
+import beans.EventType;
 import database.EventTypeDAO;
 //Work on the SQL first, then come and add onto these.
 import database.util.DatabaseUtil;
-import main.Department;
-import main.EventType;
 
 public class EventTypePostgre implements EventTypeDAO{
 	// create table query, CREATE TABLE RequestType (ID SERIAL PRIMARY KEY NOT NULL, RequestType String NOT NULL);

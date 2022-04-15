@@ -101,19 +101,19 @@ function refresh(){
 
 async function editRequestByRequesetID(ele, status,requestID){
   let apiCall = "";
-  if(ele.id == "manager-request"){
+  if(ele.className == "manager-request"){
     apiCall = requestAPI+managerAPI+editRequest;
-  } else if (ele.id == "department-request"){
+  } else if (ele.className == "department-request"){
     apiCall = requestAPI+deptHeadAPI+editRequest;
   }
   let credentials = {};
   if(status == "Accept"){
-    if(ele.id == "manager-request"){
+    if(ele.className == "manager-request"){
       credentials = {
         "requestID":requestID,
         "statusID": "2"
       }
-    } else if (ele.id == "department-request"){
+    } else if (ele.className == "department-request"){
       credentials = {
         "requestID":requestID,
         "statusID": "4"
@@ -136,7 +136,7 @@ async function editRequestByRequesetID(ele, status,requestID){
 
 async function getRequestByEmployeeID(){
   let apiCall = requestAPI+employeeAPI+getRequest;
-  var ele = "requestCenter";
+  var ele = "viewRequest";
   let credentials = {
     "employeeID": sessionStorage.getItem('Auth-Token')
   };
@@ -192,7 +192,7 @@ function populateRequest(jsonRequests, parent){
   for(let request of jsonRequests){
     let requestContainer = createDiv("request-container");
 
-    let elementText = '<div class="request-id-label" onclick="toggleRequestDisplay(this);">'+
+    let elementText = '<div class="request-id-label" id=\'request'+request.requestID+'\' onclick="toggleRequestDisplay(this);">'+
     request.requestID +
     '</div>\
     <div class="request-content" style="display:none;">\
@@ -235,7 +235,7 @@ function populateRequest(jsonRequests, parent){
 <div class="request-row" >\
 <div class="request-label-container request">\
   <div class="request-label request">status:</div>\
-  <div class="request-info request" id="status">'+request.statusId.statusType+'</div>\
+  <div class="request-info request" id=\'status'+request.requestID+'\'>'+request.statusId.statusType+'</div>\
 </div>\
 </div>\
 <div class="request-row" >\
@@ -247,8 +247,8 @@ function populateRequest(jsonRequests, parent){
 ';
     if(parent === "manager-request" || parent === "department-request"){
       elementText =  elementText + '<div class="request-row">\
-      <button id='+ parent + ' onclick="editRequestByRequesetID(this,\'Accept\',\''+request.requestID+'\')">Accept</button>\
-      <button id='+ parent + ' onclick="editRequestByRequesetID(this,\'Reject\',\''+request.requestID+'\')">Reject</button>\
+      <button class='+ parent + 'id=\'Accept'+request.requestID+'\' onclick="editRequestByRequesetID(this,\'Accept\',\''+request.requestID+'\')">Accept</button>\
+      <button class='+ parent + 'id=\'Reject'+request.requestID+'\' onclick="editRequestByRequesetID(this,\'Reject\',\''+request.requestID+'\')">Reject</button>\
       </div>\
       ';
     }

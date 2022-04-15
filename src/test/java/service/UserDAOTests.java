@@ -11,10 +11,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
+import beans.Employee;
 import database.EmployeeDAO;
 import database.postgre.EmployeePostgre;
 import exception.UsernameAlreadyExistsException;
-import main.Employee;
 
 public class UserDAOTests {
 	private EmployeeDAO employeeDAO = new EmployeePostgre();

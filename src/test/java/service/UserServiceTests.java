@@ -17,10 +17,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import beans.Employee;
 import database.EmployeeDAO;
 import exception.IncorrectCredentialExcception;
+import exception.UserNotExistException;
 import exception.UsernameAlreadyExistsException;
-import main.Employee;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
@@ -118,7 +119,7 @@ public class UserServiceTests {
 		//Potentially not needed to test this
 	}
 	@Test 
-	void loginSuccess() throws IncorrectCredentialExcception {
+	void loginSuccess() throws IncorrectCredentialExcception, UserNotExistException {
 		Employee mockUser = new Employee();
 		mockUser.setUsername("mockUser_1");
 		mockUser.setPassword("mockUser_password");

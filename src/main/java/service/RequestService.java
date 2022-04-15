@@ -3,13 +3,13 @@ package service;
 import java.util.Map;
 import java.util.Set;
 
+import beans.Department;
+import beans.EventType;
+import beans.Request;
+import beans.Status;
 import database.DepartmentDAO;
 import database.postgre.DepartmentPostgre;
 import exception.RequestSubmittedUnsuccessfully;
-import main.Department;
-import main.EventType;
-import main.Request;
-import main.Status;
 
 public interface RequestService {
 	//Requests

@@ -2,7 +2,7 @@ package database;
 
 import java.util.Set;
 
-import main.Request;
+import beans.Request;
 
 public interface RequestDAO extends GenericDAO<Request> {
 	public Set<Request> getAllRequestsBySubmitterID(int SubmitterID);
