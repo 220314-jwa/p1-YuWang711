@@ -247,8 +247,8 @@ function populateRequest(jsonRequests, parent){
 ';
     if(parent === "manager-request" || parent === "department-request"){
       elementText =  elementText + '<div class="request-row">\
-      <button class='+ parent + 'id=\'Accept'+request.requestID+'\' onclick="editRequestByRequesetID(this,\'Accept\',\''+request.requestID+'\')">Accept</button>\
-      <button class='+ parent + 'id=\'Reject'+request.requestID+'\' onclick="editRequestByRequesetID(this,\'Reject\',\''+request.requestID+'\')">Reject</button>\
+      <button class=\''+ parent + '\' id=\'Accept'+request.requestID+'\' onclick="editRequestByRequesetID(this,\'Accept\',\''+request.requestID+'\')">Accept</button>\
+      <button class=\''+ parent + '\' id=\'Reject'+request.requestID+'\' onclick="editRequestByRequesetID(this,\'Reject\',\''+request.requestID+'\')">Reject</button>\
       </div>\
       ';
     }

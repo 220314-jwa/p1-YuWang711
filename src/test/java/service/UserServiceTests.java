@@ -71,6 +71,8 @@ public class UserServiceTests {
 		mockerUser_1.setDeptID(1);
 		mockerUser_1.setManagerID(1);
 		int mockUserID = employeeServ.register(mockerUser_1);
+
+		
 		mockerUser_1.setEmployeeID(mockUserID);
 	}	
 	@AfterAll
@@ -110,32 +112,33 @@ public class UserServiceTests {
 			employeeServ.register(employee);
 		});
 	}
-	@Test
-	void registerInvalidInput() {
-		//Do I need this?
-	}
-	@Test
-	void registerMissingCredential() {
-		//Potentially not needed to test this
-	}
 	@Test 
 	void loginSuccess() throws IncorrectCredentialExcception, UserNotExistException {
 		Employee mockUser = new Employee();
 		mockUser.setUsername("mockUser_1");
 		mockUser.setPassword("mockUser_password");
+
 		employeeServ.logIn(mockUser);
-		
+
 		assertEquals(mockUser.getUsername(),mockerUser_1.getUsername());
 	}
 	@Test
-	void loginAccountDoesNotExist() {
-		//Might just be the same with incrroect credential
+	void loginAccountDoesNotExist() throws IncorrectCredentialExcception, UserNotExistException {
+		Employee mockUser = new Employee();
+		mockUser.setUsername("mockUser_1");
+		mockUser.setPassword("mockUser_password");
+		when(employeeDAO.getIdByUsername(mockUser.getUsername())).thenReturn(1);		
+
+		assertThrows(UsernameAlreadyExistsException.class ,()->{
+			employeeServ.logIn(mockUser);
+		});
+
 	}
 	@Test
 	void loginIncorrectCredential() {
 		Employee mockUser = new Employee();
-		mockUser.setUsername("test_user_02");
-		mockUser.setPassword("test_user_password");
+		mockUser.setUsername("test_user_01");
+		mockUser.setPassword("test_user_password2");
 
 		assertThrows(IncorrectCredentialExcception.class ,()->{
 			employeeServ.logIn(mockUser);

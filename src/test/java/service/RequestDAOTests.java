@@ -98,9 +98,9 @@ public class RequestDAOTests {
 
 		Request requestUpdate = requestDAO.getById(requestId);
 		System.out.println(requestId);
-		requestUpdate.setDescription("test_description_two");
+		requestUpdate.setStatusId(new Status(2,"Manager-Approved"));
 		requestDAO.update(requestUpdate);
-		assertEquals("test_description_two",requestDAO.getById(requestId).getDescription());	
+		assertEquals(2,requestDAO.getById(requestId).getStatusId().getStatus());	
 	}
 	@Test
 	@Order(5)
